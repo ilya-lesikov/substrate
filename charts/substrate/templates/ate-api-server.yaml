@@ -69,6 +69,10 @@ spec:
         prometheus.io/port: "9090"
     spec:
       serviceAccountName: {{ include "substrate.fullname" (list "ate-api-server" .) }}
+{{- with .Values.ateApiServer.hostAliases }}
+      hostAliases:
+{{ toYaml . | indent 6 }}
+{{- end }}
 {{- if eq .Values.auth.mode "jwt" }}
       initContainers:
       - name: assemble-cred-bundle
@@ -110,6 +114,9 @@ spec:
         - "--session-id-ca-pool=/run/session-id-ca-pool/pool.json"
         - "--client-jwt-ca-cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 {{- end }}
+{{- with .Values.ateApiServer.extraArgs }}
+{{ toYaml . | indent 8 }}
+{{- end }}
         env:
         - name: POD_NAME
           valueFrom:
@@ -144,6 +151,9 @@ spec:
         - { name: ateapi-tls,          mountPath: /run/ateapi-tls, readOnly: true }
         - { name: session-id-jwt-pool, mountPath: /run/session-id-jwt-pool }
         - { name: session-id-ca-pool,  mountPath: /run/session-id-ca-pool, readOnly: true }
+{{- end }}
+{{- with .Values.ateApiServer.extraVolumeMounts }}
+{{ toYaml . | indent 8 }}
 {{- end }}
         ports:
         - containerPort: 443
@@ -214,6 +224,9 @@ spec:
               name: session-id-ca-pool
               items:
               - { key: pool, path: pool.json }
+{{- end }}
+{{- with .Values.ateApiServer.extraVolumes }}
+{{ toYaml . | indent 6 }}
 {{- end }}
 ---
 apiVersion: v1

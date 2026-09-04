@@ -110,6 +110,15 @@ redis:
 # Name of a ConfigMap in the release namespace that supplies per-environment
 # overrides for ate-api-server (ATE_API_REDIS_*, ATE_API_K8SJWT_ISSUER, ...).
 # Mounted via envFrom with optional=true. Created by the chart from these values.
+# ate-api-server overrides. extraArgs / extraVolumes / extraVolumeMounts /
+# hostAliases are appended verbatim for installer-specific knobs (e.g. pointing
+# OIDC discovery at an in-cluster endpoint on a cluster without anonymous auth).
+ateApiServer:
+  extraArgs: []
+  extraVolumes: []
+  extraVolumeMounts: []
+  hostAliases: []
+
 ateApiServerEnvVarsConfigMap: ate-api-server-envvars
 
 otel:
