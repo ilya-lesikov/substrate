@@ -770,6 +770,12 @@ func (s *Store) remoteOpts(ctx context.Context, parsedRef name.Reference) []remo
 	}
 	if s.authenticator != nil && registryUsesGCPAuth(registry) {
 		opts = append(opts, remote.WithAuth(s.authenticator))
+	} else {
+		// Every other registry falls back to docker-style credentials, so a
+		// private registry can be used by pointing DOCKER_CONFIG at a mounted
+		// pull secret. The keychain resolves to anonymous access when no
+		// credentials match, which is the behaviour public registries had before.
+		opts = append(opts, remote.WithAuthFromKeychain(authn.DefaultKeychain))
 	}
 	return opts
 }

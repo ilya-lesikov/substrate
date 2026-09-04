@@ -53,6 +53,12 @@ atelet:
   storageBackend: s3
   extraArgs: []
   extraEnv: []
+  # extraVolumes / extraVolumeMounts exist so a registry credential file can be
+  # mounted: pulls from any registry other than gcr.io/pkg.dev authenticate with
+  # docker-style credentials, which atelet finds via DOCKER_CONFIG (set through
+  # extraEnv).
+  extraVolumes: []
+  extraVolumeMounts: []
 
 # Name of a ConfigMap in the release namespace that supplies per-environment
 # overrides for ate-api-server (ATE_API_POSTGRES_CONNECTION_STRING, ...).
@@ -63,7 +69,7 @@ otel:
   endpoint: ""
 
 image:
-  registry: ghcr.io/kagent-dev/substrate
+  registry: ghcr.io/ilya-lesikov/substrate
   tag: ""
 
 images:

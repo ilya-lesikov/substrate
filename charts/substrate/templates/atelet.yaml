@@ -173,6 +173,9 @@ spec:
         - name: host-dev
           mountPath: /host/dev
           readOnly: true
+{{- with .Values.atelet.extraVolumeMounts }}
+{{ toYaml . | indent 8 }}
+{{- end }}
       volumes:
       - name: run-ateom
         hostPath:
@@ -212,3 +215,6 @@ spec:
                 matchLabels:
                   podcert.ate.dev/canarying: live
               path: trust-bundle.pem
+{{- with .Values.atelet.extraVolumes }}
+{{ toYaml . | indent 6 }}
+{{- end }}

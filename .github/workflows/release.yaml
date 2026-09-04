@@ -101,7 +101,7 @@ jobs:
         if: inputs.create_release
         env:
           HELM_EXPERIMENTAL_OCI: "1"
-          CHART_REPOSITORY: oci://ghcr.io/kagent-dev/substrate/helm
+          CHART_REPOSITORY: oci://ghcr.io/ilya-lesikov/substrate/helm
         run: |
           set -o errexit -o nounset -o pipefail
 
