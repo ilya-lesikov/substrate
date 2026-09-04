@@ -110,8 +110,14 @@ spec:
         volumeMounts:
         - name: run-ateom
           mountPath: /var/lib/ateom-gvisor
+{{- with .Values.atelet.extraVolumeMounts }}
+{{ toYaml . | indent 8 }}
+{{- end }}
       volumes:
       - name: run-ateom
         hostPath:
           path: /var/lib/ateom-gvisor
           type: DirectoryOrCreate
+{{- with .Values.atelet.extraVolumes }}
+{{ toYaml . | indent 6 }}
+{{- end }}

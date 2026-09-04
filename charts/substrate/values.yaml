@@ -93,6 +93,8 @@ atelet:
   storageBackend: s3
   extraArgs: []
   extraEnv: []
+  extraVolumes: []
+  extraVolumeMounts: []
 
 redis:
   # Override the cluster address. Empty -> derived from valkey.enabled
@@ -114,7 +116,7 @@ otel:
   endpoint: ""
 
 image:
-  registry: ghcr.io/kagent-dev/substrate
+  registry: ghcr.io/ilya-lesikov/substrate
   tag: ""
 
 images:
